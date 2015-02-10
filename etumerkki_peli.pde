@@ -1,5 +1,5 @@
 //------------------------------OSC-------------------------//|
-//touchOSC kirjastot                                        //|
+//touchOSC libraries                                        //|
 import oscP5.*;                                             //|
 import netP5.*;                                             //|
                                                             //|
