@@ -64,13 +64,19 @@ void draw() {
   
   if(notesToDrag != null) { //Check that notesToDrag array is not null
     Note[] actualNotes = notesToDrag;
+    boolean handCursor = false;
     for(int j = 0; j < actualNotes.length; j++) {
       int i = j + 100;
       Note note = actualNotes[j];
       if(note != null) { //Check that note object isn't null
+        if(((vectorsAreOnTopOfEachOthers(mouseLocation, note.location, note.getImgSizeFast())))) {
+          handCursor = true;
+        }
+
         if(((vectorsAreOnTopOfEachOthers(mouseLocation, note.location, note.getImgSizeFast()) && mousePressed && firstSelected == -1) || note.selected) && (firstSelected == -1 || firstSelected == i)) { //Check if mouse is about in the same place where the note object is
           note.locationOffset(mouseLocation, mouseOldLocation);
           note.selected = true;
+          
           if(firstSelected == -1) {
             firstSelected = i;
           }
@@ -81,6 +87,12 @@ void draw() {
         }
         note.draw();
       }
+    }
+    if(handCursor) {
+      cursor(HAND);
+    }
+    else {
+      cursor(ARROW);
     }
   }
   
