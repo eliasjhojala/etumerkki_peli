@@ -4,16 +4,16 @@ void draw() {
   translate(getX(offset), getY(offset));
   doScale();
   
-  if(!allMajorsCompleted) {
-    runGame();
-  }
-  else {
-    textSize(50);
-    textAlign(CENTER);
-    fill(invert(bgColor));
-    text("Conguralations! You have completed the game", width/2, height/2);
-  }
+  if(!allMajorsCompleted) runGame(); //Run game if it's not completed yet
+  else congratulations(); //If completed then show congratulations text
   
+}
+
+void congratulations() {
+  textSize(50);
+  textAlign(CENTER);
+  fill(invert(bgColor));
+  text("Congratulations! You have completed the game", width/2, height/2);
 }
 
 color invert(color c) {
