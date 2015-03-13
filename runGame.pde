@@ -1,17 +1,39 @@
-void runGame() {
+void runGame() { 
+  scale(zoom);
+  drawViivasto();
+  showMajorName();
+  
+  setMouseLocations();
+  doDragging();
+  checkIfRight();
+  drawToDrag();
+}
+
+void drawViivasto() {
   drawViivasto(100, 300, 1000, 400);
+}
+
+void showMajorName() {
+  //Show current major name
   pushStyle();
     stroke(textColor);
     fill(textColor);
     textSize(50);
     text(majors[constrain(actualMajor, 0, majors.length-1)].name, 50, 50);
   popStyle();
+  //End of showing current major name
+}
+
+void setMouseLocations() {
   mouseLocation = new PVector(mouseX-getX(offset), mouseY-getY(offset)); //Save mouse location to PVector
   mouseOldLocation = new PVector(pmouseX-getX(offset), pmouseY-getY(offset));
-  
-  movingObjects = false;
-  
+  mouseLocation.div(zoom);
+  mouseOldLocation.div(zoom);
+}
+
+void doDragging() {
   { //Dragging
+     movingObjects = false;
      if(notesToDrag != null) { //Check that notesToDrag array is not null
       Note[] actualNotes = notesToDrag;
       boolean handCursor = false;
@@ -23,9 +45,7 @@ void runGame() {
           if(((vectorsAreOnTopOfEachOthers(mouseLocation, note.location, note.getImgSizeFast())))) {
             handCursor = true;
           }
-          
-          
-          
+
           boolean noteIsAlreadySelected = note.selected;
           boolean nothingSelected = firstSelected == -1;
           boolean thisSelected = firstSelected == i;
@@ -46,15 +66,16 @@ void runGame() {
             note.selected = false;
             firstSelected = -1;
           }
-          note.draw();
+          note.checkMoving();
         }
       }
       if(handCursor) { cursor(HAND); }
       else { cursor(ARROW); }
     } //End of checking notesToDrag array isn't null
   } //End of dragging
-  
-  
+}
+
+void checkIfRight() {
   { //CHECK IF DRAGGED TO RIGHT PLACE --> IF ALL DRAGGED TO RIGHT PLACE CHANGE MAJOR
     if(notes != null) { //Check that notes object array isn't null
       for(int i = 0; i < notes.length; i++) { //Go through all the note objects
@@ -106,5 +127,16 @@ void runGame() {
       } //End of for(int i = 0; i < notes.length; i++)
     } //End of if(notes != null)
   } //END OF CHECKING IF DRAGGED TO RIGHT PLACE ETC.
- 
+}
+
+void drawToDrag() {
+  { //Draw notes to drag
+    Note[] actualNotes = notesToDrag;
+    for(int j = 0; j < actualNotes.length; j++) {
+      Note note = actualNotes[j];
+      if(note != null) { //Check that note object isn't null
+        note.draw();
+      } //End of checking that note object isn't null
+    }
+  } //End of drawing notes to drag
 }
