@@ -1,20 +1,9 @@
-//------------------------------OSC-------------------------//|
-//touchOSC libraries                                        //|
-import oscP5.*;                                             //|
-import netP5.*;                                             //|
-                                                            //|
-//import method class                                       //|
-import java.lang.reflect.Method;                            //|
-                                                            //|
-OscP5 oscP5;                                                //|
-                                                            //|
-NetAddress Remote;                                          //|
-int portOutgoing = 9000;                                    //|
-String remoteIP = "192.168.0.12"; //iPadin ip-osoite        //|
-//----------------------------OSC END-----------------------//|
+
 
 //Define all the variables
-color bgColor = color(100, 100, 100);
+boolean showAlsoHiddenNotes = true;
+
+color bgColor = color(255, 255, 200);
 color noteColor = color(255, 0, 0);
 color viivastoColor = color(0, 0, 0);
 color textColor = color(0, 0, 0);
@@ -42,4 +31,23 @@ PImage viivasto;
 int actualMajor = 0;
 
 boolean mouseIsDragged = true;
+boolean movingObjects = false;
+
+boolean allMajorsCompleted;
 //End defining variables
+
+
+//------------------------------OSC-------------------------//|
+//touchOSC libraries                                        //|
+import oscP5.*;                                             //|
+import netP5.*;                                             //|
+                                                            //|
+//import method class                                       //|
+import java.lang.reflect.Method;                            //|
+                                                            //|
+OscP5 oscP5;                                                //|
+                                                            //|
+NetAddress Remote;                                          //|
+int portOutgoing = 9000;                                    //|
+String remoteIP = "192.168.0.12"; //iPadin ip-osoite        //|
+//----------------------------OSC END-----------------------//|

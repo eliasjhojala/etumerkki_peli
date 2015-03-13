@@ -12,7 +12,7 @@ void setup() {
   int numberOfNoteTypes = 2;
   noteTypes = new NoteType[numberOfNoteTypes];
   noteTypes[0] = new NoteType(0, "media/alennus.png", 60, 190, 0, -50);
-  noteTypes[1] = new NoteType(1, "media/ylennys.png", 60, 190, 0, -30);
+  noteTypes[1] = new NoteType(1, "media/ylennys.png", 60, 190, 0, -35);
 
   
   String viivastoUrl = "media/viivasto.png";

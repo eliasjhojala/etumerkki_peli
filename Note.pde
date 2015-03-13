@@ -15,6 +15,8 @@ class Note {
   
   boolean found;
   
+  PVector defaultLocation;
+  
   void show() {
     isShown = true;
     thisColor = noteColor;
@@ -26,21 +28,23 @@ class Note {
   
   Note(int x, int y, int t) {
     setType(t);
-    setLocationWithOffset(x, y);
+    setLocationWithOffset(x, y, true);
   }
   
   Note(int x, int y, String t) {
     setType(t);
-    setLocationWithOffset(x, y);
+    setLocationWithOffset(x, y, true);
   }
   
-  void setLocationWithOffset(int x, int y) {
+  void setLocationWithOffset(int x, int y, boolean thisIsDefault) {
     int id = getNoteTypeId();
     PVector offset = new PVector(0, 0);
     if(id >= 0) {
       offset = noteTypes[id].offset.get();
     }
     setLocation(round(x+offset.x), round(y+offset.y));
+    
+    if(thisIsDefault) { defaultLocation = new PVector(round(x+offset.x), round(y+offset.y)); }
   }
   
   
@@ -152,25 +156,34 @@ class Note {
   
   void moveTo(PVector newPlace) {
     placeToMove = newPlace;
+  }  
+  
+  void moveToDefault() {
+    moveTo(defaultLocation);
   }
   
   void draw() {
-    //if(isShown) {
+    if(isShown || showAlsoHiddenNotes) {
       //Draw the note
       drawImage(location);
-   // }
+    }
    if(placeToMove != null) {
-     if(placeToMove.x < location.x) {
-       location.x -= round((location.x - placeToMove.x) / 10);
+     
+     if(placeToMove.x < location.x-1) {
+       location.x -= (location.x - placeToMove.x) / 10;
+       movingObjects = true;
      }
-     if(placeToMove.x > location.x) {
-       location.x += round((placeToMove.x - location.x) / 10);
+     else if(placeToMove.x > location.x+1) {
+       location.x += (placeToMove.x - location.x) / 10;
+       movingObjects = true;
      }
-     if(placeToMove.y < location.y) {
-       location.y -= round((location.y - placeToMove.y) / 10);
+     if(placeToMove.y < location.y-1) {
+       location.y -= (location.y - placeToMove.y) / 10;
+       movingObjects = true;
      }
-     if(placeToMove.y > location.y) {
-       location.y += round((placeToMove.y - location.y) / 10);
+     else if(placeToMove.y > location.y+1) {
+       location.y += (placeToMove.y - location.y) / 10;
+       movingObjects = true;
      }
    }
   }
