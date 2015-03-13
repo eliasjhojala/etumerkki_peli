@@ -13,6 +13,8 @@ class Note {
   
   boolean isShown;
   
+  boolean found;
+  
   void show() {
     isShown = true;
     thisColor = noteColor;
@@ -153,10 +155,10 @@ class Note {
   }
   
   void draw() {
-    if(isShown) {
+    //if(isShown) {
       //Draw the note
       drawImage(location);
-    }
+   // }
    if(placeToMove != null) {
      if(placeToMove.x < location.x) {
        location.x -= round((location.x - placeToMove.x) / 10);

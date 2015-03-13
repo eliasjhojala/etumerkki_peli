@@ -27,33 +27,27 @@ void draw() {
             Note note = actualNotes[j];
             if(note != null) { //Check that note object isn't null
               
-              { //Check if some note is dragged to right place
-                boolean draggedToRightPlace = false;
-                if(notesToDrag != null) { //Check that notesToDrag array isn't null
-                  for(int k = 0; k < notesToDrag.length; k++) { //Go through all the notesToDrag
-                    if(notesToDrag[k] != null) { //Check that single notesToDrag object isn't null
-                      if(vectorCentersAreOnTopOfEachOthers(notesToDrag[k].location, note.location, note.getImgSizeFast()) && !mousePressed && notesToDrag[k].type == note.type) {
-                        draggedToRightPlace = true;
-                        notesToDrag[k].moveTo(note.location);
-                        notesToDrag[k].thisColor = color(0, 255, 0);
-                      }
-                    } //End of checking that single notesToDrag object isn't null
-                  } //End of going through all the notesToDrag
-                } //End of checking that notesToDrag array isn't null
-                if(draggedToRightPlace) { /*note.show();*/ }
-              } //End of checkin are there any notes dragged to right place
+              if(!note.found) { //Check if note is not "found" already
+                { //Check if some note is dragged to right place
+                  boolean draggedToRightPlace = false;
+                  if(notesToDrag != null) { //Check that notesToDrag array isn't null
+                    for(int k = 0; k < notesToDrag.length; k++) { //Go through all the notesToDrag
+                      if(notesToDrag[k] != null) { //Check that single notesToDrag object isn't null
+                        if(vectorCentersAreOnTopOfEachOthers(notesToDrag[k].location, note.location, note.getImgSizeFast()) && !mousePressed && notesToDrag[k].type == note.type && !note.found) {
+                          draggedToRightPlace = true;
+                          notesToDrag[k].moveTo(note.location);
+                          notesToDrag[k].thisColor = color(0, 255, 0);
+                          note.found = true; //Never move this note anymore
+                          notesToDrag[k].found = true; //Never move this note anymore
+                        }
+                      } //End of checking that single notesToDrag object isn't null
+                    } //End of going through all the notesToDrag
+                  } //End of checking that notesToDrag array isn't null
+                  if(draggedToRightPlace) { /*note.show();*/ }
+                } //End of checkin are there any notes dragged to right place
+                
+              } //End of checking if note is not "found" anymore
               
-              if(((vectorsAreOnTopOfEachOthers(mouseLocation, note.location, note.getImgSizeFast()) && mousePressed && firstSelected == -1) || note.selected) && (firstSelected == -1 || firstSelected == i)) { //Check if mouse is about in the same place where the note object is
-                note.locationOffset(mouseLocation, mouseOldLocation);
-                note.selected = true;
-                if(firstSelected == -1) {
-                  firstSelected = i;
-                }
-              }
-              if(!mousePressed) {
-                note.selected = false;
-                firstSelected = -1;
-              }
               note.draw();
             }
           }
@@ -73,7 +67,7 @@ void draw() {
           handCursor = true;
         }
 
-        if(((vectorsAreOnTopOfEachOthers(mouseLocation, note.location, note.getImgSizeFast()) && mousePressed && firstSelected == -1) || note.selected) && (firstSelected == -1 || firstSelected == i)) { //Check if mouse is about in the same place where the note object is
+        if((((vectorsAreOnTopOfEachOthers(mouseLocation, note.location, note.getImgSizeFast()) && mousePressed && firstSelected == -1) || note.selected) && (firstSelected == -1 || firstSelected == i)) && !note.found) { //Check if mouse is about in the same place where the note object is
           note.locationOffset(mouseLocation, mouseOldLocation);
           note.selected = true;
           
@@ -112,10 +106,10 @@ void changeMajor(int direction) {
 }
 
 void mouseDragged() {
-  if(firstSelected == -1) {
-    offset.x -= pmouseX-mouseX;
-    offset.y -= pmouseY-mouseY;
-  }
+//  if(firstSelected == -1) {
+//    offset.x -= pmouseX-mouseX;
+//    offset.y -= pmouseY-mouseY;
+//  }
   mouseIsDragged = true;
 }
 void mousePressed() {
