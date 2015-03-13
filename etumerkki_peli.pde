@@ -28,7 +28,7 @@ void keyReleased() {
 
 void changeMajor(int direction) {
   if(direction == UP) { actualMajor++; } else if(direction == DOWN) { actualMajor--; }
-  if(actualMajor >= majors.length-1) {
+  if(actualMajor >= majors.length) {
     allMajorsCompleted = true;
   }
   actualMajor = constrain(actualMajor, 0, majors.length-1);

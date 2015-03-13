@@ -1,4 +1,5 @@
 void createNotesToDrag() {
+  //Todo: create objects all the time in thread --> changing major won't take so much time
   for(int i = 0; i < 10; i++) {
     notesToDrag[i*2] = new Note(width-100, height-300, "Alennus");
     notesToDrag[i*2+1] = new Note(width-300, height-300, "Ylennys");

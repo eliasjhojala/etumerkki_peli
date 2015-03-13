@@ -167,7 +167,11 @@ class Note {
       //Draw the note
       drawImage(location);
     }
-   if(placeToMove != null) {
+   checkMoving();
+  }
+  
+  void checkMoving() {
+    if(placeToMove != null) {
      
      if(placeToMove.x < location.x-1) {
        location.x -= (location.x - placeToMove.x) / 10;

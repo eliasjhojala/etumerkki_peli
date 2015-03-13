@@ -3,6 +3,8 @@
 //Define all the variables
 boolean showAlsoHiddenNotes = true;
 
+float zoom = 0.8;
+
 color bgColor = color(255, 255, 200);
 color noteColor = color(255, 0, 0);
 color viivastoColor = color(0, 0, 0);
