@@ -17,6 +17,9 @@ class Note {
   
   PVector defaultLocation;
   
+  boolean dragging;
+  int lastDraggedTime;
+  
   void show() {
     isShown = true;
     thisColor = noteColor;
@@ -155,11 +158,15 @@ class Note {
   PVector placeToMove;
   
   void moveTo(PVector newPlace) {
-    placeToMove = newPlace;
+    placeToMove = newPlace.get();
   }  
   
   void moveToDefault() {
     moveTo(defaultLocation);
+  }
+  
+  boolean isInDefaultLocation() {
+    return location.x == defaultLocation.x && location.y == defaultLocation.y;
   }
   
   void draw() {
@@ -172,23 +179,32 @@ class Note {
   
   void checkMoving() {
     if(placeToMove != null) {
-     
-     if(placeToMove.x < location.x-1) {
-       location.x -= (location.x - placeToMove.x) / 10;
-       movingObjects = true;
-     }
-     else if(placeToMove.x > location.x+1) {
-       location.x += (placeToMove.x - location.x) / 10;
-       movingObjects = true;
-     }
-     if(placeToMove.y < location.y-1) {
-       location.y -= (location.y - placeToMove.y) / 10;
-       movingObjects = true;
-     }
-     else if(placeToMove.y > location.y+1) {
-       location.y += (placeToMove.y - location.y) / 10;
-       movingObjects = true;
-     }
+      if(placeToMove.x != -1) {
+         if(placeToMove.x < location.x-1) {
+           location.x -= (location.x - placeToMove.x) / 10;
+           movingObjects = true;
+         }
+         else if(placeToMove.x > location.x+1) {
+           location.x += (placeToMove.x - location.x) / 10;
+           movingObjects = true;
+         }
+         else {
+           placeToMove.x = -1;
+         }
+      }
+      if(placeToMove.y != -1) {
+         if(placeToMove.y < location.y-1) {
+           location.y -= (location.y - placeToMove.y) / 10;
+           movingObjects = true;
+         }
+         else if(placeToMove.y > location.y+1) {
+           location.y += (placeToMove.y - location.y) / 10;
+           movingObjects = true;
+         }
+         else {
+           placeToMove.y = -1;
+         }
+      }
    }
   }
 }

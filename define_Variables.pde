@@ -36,6 +36,13 @@ boolean mouseIsDragged = true;
 boolean movingObjects = false;
 
 boolean allMajorsCompleted;
+
+boolean gameStarted;
+long gameStartMillis;
+boolean gameCompleteTimeCounted;
+long completeTime;
+
+int mistakes;
 //End defining variables
 
 
