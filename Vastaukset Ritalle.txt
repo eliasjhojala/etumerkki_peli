@@ -1,0 +1,38 @@
+OMA KURSSITYÖ
+1. Mikä on työsi nimi? Kirjoita lyhyt kuvaus siitä, mitä ohjelma tekee.
+2. Mikä oman idean toteuttamisessa oli loogisesti haastavinta ja mikä helpointa?
+3. Mitkä olivat sinulle vaativimmat ohjelmointirakenteet, joita käytit?
+4. Mitä uutta opit, kun teit omaa kurssityötäsi?
+5. Oletko lisännyt koodiisi ainakin perusrakenteiden mukaiset kommentit vai tarkemman kommentoinnin?
+6. Minkä arvosanan antaisit itse työllesi?
+7. OHJELMOINTIHARRASTUS
+
+Harrastatko ohjelmointia ja jos vastaus on KYLLÄ, niin vastaa myös
+A) mitä ohjelmointikieliä tai -ympäristöjä olet käyttänyt/käytät
+B) kuinka paljon keskimäärin ohjelmoit omalla vapaa-ajalla viikossa
+8. LISÄKYSYMYKSIÄ (ei TurboPascalia käyttäneille oppilaille)
+Nämä kysymykset vain niille oppilaille, jotka ovat käyttäneet ohjelmointiympäristöjä omilta tietokoneilta
+A) Kuinka kauan olet käyttänyt kyseistä ohjelmointikieltä?
+B) Kuinka paljon aikaa käytät ohjelmointiin keskimäärin viikossa?
+C) Teitkö tämän kurssin työtä myös vapaa-ajalla? Jos vastaus on kyllä, niin arvioi kuinka monta tuntia käytit vapaa-aikaasi työn tekemiseen.
+
+
+1. Etumerkkipeli. Ohjelmassa etumerkkejä raahataan oikeille paikoille. Kun käyttäjä on raahannut kyseisen sävellajin etumerkit paikoilleen siirrytään seuraavaan sävellajiin.
+2. Haastavinta oli tarkistaa mitä kappaletta liikutetaan milloinkin ja mitkä kappaleet ovat päällekkäin.
+3. Itseasiassa yksittäiset rakenteet joita käytin olivat hyvinkin yksinkertaisia. Ohjelmassa ei ole juurikaan muuta kuin for-looppeja ja iffejä, sekä yksinkertaisia matemaattisia laskutoimituksia. 
+Toki ohjelma sisältää muutaman classin, jotka ovat sisältä kumminkin myös hyvin yksinkertaisia.
+4. Kuten aina, ohjelmoidessa tuli vastaan paljon pieniä ongelmia, joihin keksin ratkaisun melko nopeasti. 
+Kuitenkin ainoa uusi asia, jonka opin oli miten skaalata hiiren sijaintia helposti niin että kuvan skaalaaminen ei sekoita hiire ja kuvan suhteellista sijaintia.
+5. Koodissani on paikoin jopa rivikohtaiset kommentit, mutta välillä kommentointi on myös hieman harvempaa.
+6. Kun otetaan huomioon kuinka vähän aikaa on ollut voisin antaa ysin. Ohjelmassa on kuitenkin vielä pieniä virheitä, 
+jotka ilmenevät välillä ja päässä on vielä paljon toimintoja, joita voisi tehdä. Myöskään ohjelman visuaalinen ilme ei ole erityisen hieno.
+7. Harrasta ohjelmointia
+	a) Tällä hetkellä ohjelmoin pääasiassa Processingilla, joka on käytännössä Javaa ja läjä siihen lisättyjä funktioita ja muita toimintoja.
+	    Aloitin ohjelmointini Visual Basicilla, jonka jälkeen tein jonkin aikaa vain nettisivuja ensin HTML:llä ja myöhemmin PHP:llä. Tällä hetkellä meneillään on suuri valo-ohjelmaprojekti Processingilla. 
+	    Kyseisessä ohjelmassa on jo noin 10 000 riviä koodia ja sillä onkin tarkoitus ohjata tulevan vappugaalan valot.
+	b) Riippuu todella paljon viikosta. Muutaman vuoden ajalla ehkäpä keskimäärin pari tuntia viikossa, mutta viime syksynä lukema nousi helposti kymmeniin tunteihin viikossa. 
+	    Nyt keväällä kun koulu ja sosiaalinen elämä on vienyt enemmän aikaa puhutaan varmaankin taas vain muutamista tunneista.
+8. Lisäkysymyksiä
+	a) Noin vuoden
+	b) ks. 7b
+	c) Kyllä, yhteensä ehkä 4 tuntia, eli melko vähän. Pitää myös huomioida, että olen ollut vähintään yhtä paljon flunssan takia poissa tunneilta.

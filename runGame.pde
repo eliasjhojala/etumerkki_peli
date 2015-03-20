@@ -1,14 +1,14 @@
 void runGame() { 
-  drawViivasto();
-  showMajorName();
-  showTime();
-  showMistakes();
-  drawPointBar();
+  drawViivasto(); //Draw viivasto
+  showMajorName(); //Show current major name
+  showTime(); //Show how many seconds (and minutes) you have played the game
+  showMistakes(); //Show how many mistakes have you done
+  drawPointBar(); //Draw bar which shows your current points
   
-  setMouseLocations();
-  doDragging();
-  checkIfRight();
-  drawToDrag();
+  setMouseLocations(); //Save mouseLocation to PVectors
+  doDragging(); //Drag notes
+  checkIfRight(); //Check if note is dragged to right place
+  drawToDrag(); //Draw notes to drag
 }
 
 void doScale() {
@@ -31,6 +31,7 @@ void showMajorName() {
 }
 
 void showTime() {
+  //Show time in top right corner
   pushStyle();
     pushMatrix();
       stroke(textColor);
@@ -39,9 +40,11 @@ void showTime() {
       text(secondsToGoodTime(round(millis()-gameStartMillis)/1000), width-100, 50);
     popMatrix();
   popStyle();
+  //End of showing time in top right corner
 }
 
 void showMistakes() {
+  //Show all the mistakes in top right corner
   pushStyle();
     pushMatrix();
       stroke(textColor);
@@ -50,6 +53,7 @@ void showMistakes() {
       text("mistakes " + str(mistakes), width-100, 150);
     popMatrix();
   popStyle();
+  //End of showing all the mistakes in top right corner
 }
 
 void setMouseLocations() {

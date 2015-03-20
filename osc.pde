@@ -1,4 +1,4 @@
-
+//This OSC receiver is made only to control colors from sliders on touch screen on some mobile device
 
 void oscEvent(OscMessage theOscMessage) {
   String addr = theOscMessage.addrPattern(); //Luetaan touchOSCin elementin osoite
