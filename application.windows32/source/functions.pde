@@ -54,3 +54,16 @@ boolean isAbout(float a, float b, float acc) {
   return abs(a-b) < acc;
 }
 
+String secondsToGoodTime(int seconds) {
+  String toReturn = "";
+  seconds = seconds % 60;
+  int minutes = int(seconds/60);
+  if(minutes != 0) {
+    toReturn = minutes + "min " + str(seconds) + "sec";
+  }
+  else {
+    toReturn = str(seconds) + "sec";
+  }
+  return toReturn;
+}
+

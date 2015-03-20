@@ -1,6 +1,9 @@
 void runGame() { 
   drawViivasto();
   showMajorName();
+  showTime();
+  showMistakes();
+  drawPointBar();
   
   setMouseLocations();
   doDragging();
@@ -25,6 +28,28 @@ void showMajorName() {
     text(majors[constrain(actualMajor, 0, majors.length-1)].name, 50, 50);
   popStyle();
   //End of showing current major name
+}
+
+void showTime() {
+  pushStyle();
+    pushMatrix();
+      stroke(textColor);
+      fill(textColor);
+      textSize(50);
+      text(secondsToGoodTime(round(millis()-gameStartMillis)/1000), width-100, 50);
+    popMatrix();
+  popStyle();
+}
+
+void showMistakes() {
+  pushStyle();
+    pushMatrix();
+      stroke(textColor);
+      fill(textColor);
+      textSize(50);
+      text("mistakes " + str(mistakes), width-100, 150);
+    popMatrix();
+  popStyle();
 }
 
 void setMouseLocations() {
@@ -66,7 +91,18 @@ void doDragging() {
             if(nothingSelected) {
               firstSelected = i;
             }
+            
+            note.dragging = true;
+            note.lastDraggedTime = frameCount;
           } //End of: Check if we want to move note
+          else { //If you dragged note to wrong place then move it back to default location
+              if(!note.isInDefaultLocation() && !note.found) {
+                if(frameCount - note.lastDraggedTime == 1) {
+                  note.moveToDefault();
+                  mistakes++;
+                }
+              }
+          }
           
           if(!mousePressed) {
             note.selected = false;
@@ -145,4 +181,29 @@ void drawToDrag() {
       } //End of checking that note object isn't null
     }
   } //End of drawing notes to drag
+}
+
+long getRunMillis() {
+  return millis()-gameStartMillis;
+}
+int getRunSecs() {
+  return round(getRunMillis()/1000);
+}
+int getMistakes() {
+  return mistakes;
+}
+int getActualMajor() {
+  return actualMajor;
+}
+float countPoints() {
+  return 10-getRunMillis()/float(10000)-getMistakes()+getActualMajor();
+}
+
+void drawPointBar() {
+  pushMatrix();
+    pushStyle();
+      fill(0);
+      rect(50, height-50, map(countPoints(), 0, 10, 0, width-100), 50);
+    popStyle();
+  popMatrix();
 }

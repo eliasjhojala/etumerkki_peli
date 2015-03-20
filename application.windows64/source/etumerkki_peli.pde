@@ -4,27 +4,46 @@ void draw() {
   translate(getX(offset), getY(offset));
   doScale();
   
-  if(!allMajorsCompleted) {
-    runGame();
+  
+  if(gameStarted && countPoints() >= 0) {
+    if(!allMajorsCompleted) runGame(); //Run game if it's not completed yet
+    else congratulations(); //If completed then show congratulations text
+  }
+  else if(countPoints() < 0) {
+    gameOver(); //Write game over text
   }
   else {
-    textSize(50);
-    textAlign(CENTER);
-    fill(invert(bgColor));
-    text("Conguralations! You have completed the game", width/2, height/2);
+    gameStartMillis = millis();
+    gameStarted = true;
   }
   
 }
 
-color invert(color c) {
-  return color(255-red(c), 255-green(c), 255-blue(c));
+void gameOver() {
+  bgColor = color(255, 0, 0);
+  textSize(200);
+  textAlign(CENTER);
+  fill(invert(bgColor));
+  text("GAME OVER", width/2, height/2);
 }
 
-void keyReleased() {
-  if(keyCode == UP || keyCode == DOWN) {
-    changeMajor(keyCode);
+void congratulations() {
+  if(!finalPointsCounted) {
+    finalPoints = round(countPoints());
+    finalPointsCounted = true;
   }
-  println(actualMajor);
+  textSize(50);
+  textAlign(CENTER);
+  fill(invert(bgColor));
+  text("Congratulations! You completed the game and got " + str(finalPoints) + "/10 points", width/2, height/2);
+  if(!gameCompleteTimeCounted) {
+    completeTime = millis()-gameStartMillis;
+    gameCompleteTimeCounted = true;
+  }
+}
+
+color invert(color c) {
+  return color(255-red(c), 255-green(c), 255-blue(c));
 }
 
 void changeMajor(int direction) {
@@ -37,10 +56,6 @@ void changeMajor(int direction) {
 }
 
 void mouseDragged() {
-//  if(firstSelected == -1) {
-//    offset.x -= pmouseX-mouseX;
-//    offset.y -= pmouseY-mouseY;
-//  }
   mouseIsDragged = true;
 }
 void mousePressed() {

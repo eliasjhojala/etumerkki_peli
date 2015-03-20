@@ -24,27 +24,46 @@ public void draw() {
   translate(getX(offset), getY(offset));
   doScale();
   
-  if(!allMajorsCompleted) {
-    runGame();
+  
+  if(gameStarted && countPoints() >= 0) {
+    if(!allMajorsCompleted) runGame(); //Run game if it's not completed yet
+    else congratulations(); //If completed then show congratulations text
+  }
+  else if(countPoints() < 0) {
+    gameOver(); //Write game over text
   }
   else {
-    textSize(50);
-    textAlign(CENTER);
-    fill(invert(bgColor));
-    text("Conguralations! You have completed the game", width/2, height/2);
+    gameStartMillis = millis();
+    gameStarted = true;
   }
   
 }
 
-public int invert(int c) {
-  return color(255-red(c), 255-green(c), 255-blue(c));
+public void gameOver() {
+  bgColor = color(255, 0, 0);
+  textSize(200);
+  textAlign(CENTER);
+  fill(invert(bgColor));
+  text("GAME OVER", width/2, height/2);
 }
 
-public void keyReleased() {
-  if(keyCode == UP || keyCode == DOWN) {
-    changeMajor(keyCode);
+public void congratulations() {
+  if(!finalPointsCounted) {
+    finalPoints = round(countPoints());
+    finalPointsCounted = true;
   }
-  println(actualMajor);
+  textSize(50);
+  textAlign(CENTER);
+  fill(invert(bgColor));
+  text("Congratulations! You completed the game and got " + str(finalPoints) + "/10 points", width/2, height/2);
+  if(!gameCompleteTimeCounted) {
+    completeTime = millis()-gameStartMillis;
+    gameCompleteTimeCounted = true;
+  }
+}
+
+public int invert(int c) {
+  return color(255-red(c), 255-green(c), 255-blue(c));
 }
 
 public void changeMajor(int direction) {
@@ -57,10 +76,6 @@ public void changeMajor(int direction) {
 }
 
 public void mouseDragged() {
-//  if(firstSelected == -1) {
-//    offset.x -= pmouseX-mouseX;
-//    offset.y -= pmouseY-mouseY;
-//  }
   mouseIsDragged = true;
 }
 public void mousePressed() {
@@ -107,6 +122,9 @@ class Note {
   boolean found;
   
   PVector defaultLocation;
+  
+  boolean dragging;
+  int lastDraggedTime;
   
   public void show() {
     isShown = true;
@@ -246,11 +264,15 @@ class Note {
   PVector placeToMove;
   
   public void moveTo(PVector newPlace) {
-    placeToMove = newPlace;
+    placeToMove = newPlace.get();
   }  
   
   public void moveToDefault() {
     moveTo(defaultLocation);
+  }
+  
+  public boolean isInDefaultLocation() {
+    return location.x == defaultLocation.x && location.y == defaultLocation.y;
   }
   
   public void draw() {
@@ -263,23 +285,32 @@ class Note {
   
   public void checkMoving() {
     if(placeToMove != null) {
-     
-     if(placeToMove.x < location.x-1) {
-       location.x -= (location.x - placeToMove.x) / 10;
-       movingObjects = true;
-     }
-     else if(placeToMove.x > location.x+1) {
-       location.x += (placeToMove.x - location.x) / 10;
-       movingObjects = true;
-     }
-     if(placeToMove.y < location.y-1) {
-       location.y -= (location.y - placeToMove.y) / 10;
-       movingObjects = true;
-     }
-     else if(placeToMove.y > location.y+1) {
-       location.y += (placeToMove.y - location.y) / 10;
-       movingObjects = true;
-     }
+      if(placeToMove.x != -1) {
+         if(placeToMove.x < location.x-1) {
+           location.x -= (location.x - placeToMove.x) / 10;
+           movingObjects = true;
+         }
+         else if(placeToMove.x > location.x+1) {
+           location.x += (placeToMove.x - location.x) / 10;
+           movingObjects = true;
+         }
+         else {
+           placeToMove.x = -1;
+         }
+      }
+      if(placeToMove.y != -1) {
+         if(placeToMove.y < location.y-1) {
+           location.y -= (location.y - placeToMove.y) / 10;
+           movingObjects = true;
+         }
+         else if(placeToMove.y > location.y+1) {
+           location.y += (placeToMove.y - location.y) / 10;
+           movingObjects = true;
+         }
+         else {
+           placeToMove.y = -1;
+         }
+      }
    }
   }
 }
@@ -315,7 +346,7 @@ int viivastoColor = color(0, 0, 0);
 int textColor = color(0, 0, 0);
 
 PVector programSize = new PVector(1000, 800);
-PVector offset = new PVector(0, 0);
+PVector offset = new PVector(100, 100);
 PVector mouseLocation;
 PVector mouseOldLocation;
 PVector rectLocation = new PVector(0, 0);
@@ -340,6 +371,15 @@ boolean mouseIsDragged = true;
 boolean movingObjects = false;
 
 boolean allMajorsCompleted;
+
+boolean gameStarted;
+long gameStartMillis;
+boolean gameCompleteTimeCounted;
+long completeTime;
+
+int mistakes;
+int finalPoints;
+boolean finalPointsCounted;
 //End defining variables
 
 
@@ -448,6 +488,19 @@ public boolean isAbout(float a, float b, float acc) {
   return abs(a-b) < acc;
 }
 
+public String secondsToGoodTime(int seconds) {
+  String toReturn = "";
+  seconds = seconds % 60;
+  int minutes = PApplet.parseInt(seconds/60);
+  if(minutes != 0) {
+    toReturn = minutes + "min " + str(seconds) + "sec";
+  }
+  else {
+    toReturn = str(seconds) + "sec";
+  }
+  return toReturn;
+}
+
 
 
 public void oscEvent(OscMessage theOscMessage) {
@@ -492,6 +545,9 @@ public void oscEvent(OscMessage theOscMessage) {
 public void runGame() { 
   drawViivasto();
   showMajorName();
+  showTime();
+  showMistakes();
+  drawPointBar();
   
   setMouseLocations();
   doDragging();
@@ -516,6 +572,28 @@ public void showMajorName() {
     text(majors[constrain(actualMajor, 0, majors.length-1)].name, 50, 50);
   popStyle();
   //End of showing current major name
+}
+
+public void showTime() {
+  pushStyle();
+    pushMatrix();
+      stroke(textColor);
+      fill(textColor);
+      textSize(50);
+      text(secondsToGoodTime(round(millis()-gameStartMillis)/1000), width-100, 50);
+    popMatrix();
+  popStyle();
+}
+
+public void showMistakes() {
+  pushStyle();
+    pushMatrix();
+      stroke(textColor);
+      fill(textColor);
+      textSize(50);
+      text("mistakes " + str(mistakes), width-100, 150);
+    popMatrix();
+  popStyle();
 }
 
 public void setMouseLocations() {
@@ -557,7 +635,18 @@ public void doDragging() {
             if(nothingSelected) {
               firstSelected = i;
             }
+            
+            note.dragging = true;
+            note.lastDraggedTime = frameCount;
           } //End of: Check if we want to move note
+          else { //If you dragged note to wrong place then move it back to default location
+              if(!note.isInDefaultLocation() && !note.found) {
+                if(frameCount - note.lastDraggedTime == 1) {
+                  note.moveToDefault();
+                  mistakes++;
+                }
+              }
+          }
           
           if(!mousePressed) {
             note.selected = false;
@@ -636,6 +725,31 @@ public void drawToDrag() {
       } //End of checking that note object isn't null
     }
   } //End of drawing notes to drag
+}
+
+public long getRunMillis() {
+  return millis()-gameStartMillis;
+}
+public int getRunSecs() {
+  return round(getRunMillis()/1000);
+}
+public int getMistakes() {
+  return mistakes;
+}
+public int getActualMajor() {
+  return actualMajor;
+}
+public float countPoints() {
+  return 10-getRunMillis()/PApplet.parseFloat(10000)-getMistakes()+getActualMajor();
+}
+
+public void drawPointBar() {
+  pushMatrix();
+    pushStyle();
+      fill(0);
+      rect(50, height-50, map(countPoints(), 0, 10, 0, width-100), 50);
+    popStyle();
+  popMatrix();
 }
 public void setup() {
   //Setup commands here

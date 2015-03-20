@@ -11,7 +11,7 @@ color viivastoColor = color(0, 0, 0);
 color textColor = color(0, 0, 0);
 
 PVector programSize = new PVector(1000, 800);
-PVector offset = new PVector(0, 0);
+PVector offset = new PVector(100, 100);
 PVector mouseLocation;
 PVector mouseOldLocation;
 PVector rectLocation = new PVector(0, 0);
@@ -36,6 +36,15 @@ boolean mouseIsDragged = true;
 boolean movingObjects = false;
 
 boolean allMajorsCompleted;
+
+boolean gameStarted;
+long gameStartMillis;
+boolean gameCompleteTimeCounted;
+long completeTime;
+
+int mistakes;
+int finalPoints;
+boolean finalPointsCounted;
 //End defining variables
 
 
