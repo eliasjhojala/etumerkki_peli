@@ -28,10 +28,14 @@ void gameOver() {
 }
 
 void congratulations() {
+  if(!finalPointsCounted) {
+    finalPoints = round(countPoints());
+    finalPointsCounted = true;
+  }
   textSize(50);
   textAlign(CENTER);
   fill(invert(bgColor));
-  text("Congratulations! You have completed the game in " + str(round(completeTime/1000)) + " seconds", width/2, height/2);
+  text("Congratulations! You completed the game and got " + str(finalPoints) + "/10 points", width/2, height/2);
   if(!gameCompleteTimeCounted) {
     completeTime = millis()-gameStartMillis;
     gameCompleteTimeCounted = true;

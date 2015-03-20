@@ -43,6 +43,8 @@ boolean gameCompleteTimeCounted;
 long completeTime;
 
 int mistakes;
+int finalPoints;
+boolean finalPointsCounted;
 //End defining variables
 
 
