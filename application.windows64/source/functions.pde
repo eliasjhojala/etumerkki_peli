@@ -56,14 +56,34 @@ boolean isAbout(float a, float b, float acc) {
 
 String secondsToGoodTime(int seconds) {
   String toReturn = "";
-  seconds = seconds % 60;
   int minutes = int(seconds/60);
-  if(minutes != 0) {
+  seconds = seconds % 60;
+  int hours = int(minutes/60);
+  minutes = minutes % 60;
+  int days = int(hours/24);
+  hours = hours % 24;
+  if(days != 0) {
+    toReturn = days + "days " + hours + "h " + minutes + "min " + str(seconds) + "sec";
+  }
+  else if(hours != 0) {
+    toReturn = hours + "h " + minutes + "min " + str(seconds) + "sec";
+  }
+  else if(minutes != 0) {
     toReturn = minutes + "min " + str(seconds) + "sec";
   }
   else {
     toReturn = str(seconds) + "sec";
   }
   return toReturn;
+}
+
+int getNext(int val, int min, int max) {
+  if(val >= min && val < max) {
+    val++;
+  }
+  else {
+    val = min;
+  }
+  return val;
 }
 

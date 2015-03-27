@@ -1,11 +1,18 @@
-void createNotesToDrag() {
+void createNotesToDragObjects() {
   //Todo: create objects all the time in thread --> changing major won't take so much time
   for(int i = 0; i < 10; i++) {
-    notesToDrag[i*2] = new Note(width-100, height-300, "Alennus");
-    notesToDrag[i*2+1] = new Note(width-300, height-300, "Ylennys");
-    notesToDrag[i*2].show();
-    notesToDrag[i*2+1].show();
+    notesToDragTemp[getNext(actualNotesToDrag, 0, 2)][i*2] = new Note(width-100, height-300, "Alennus");
+    notesToDragTemp[getNext(actualNotesToDrag, 0, 2)][i*2+1] = new Note(width-300, height-300, "Ylennys");
+    notesToDragTemp[getNext(actualNotesToDrag, 0, 2)][i*2].show();
+    notesToDragTemp[getNext(actualNotesToDrag, 0, 2)][i*2+1].show();
   }
+}
+
+int actualNotesToDrag = 0;
+void createNotesToDrag() {
+  notesToDrag = notesToDragTemp[getNext(actualNotesToDrag, 0, 2)];
+  thread("createNotesToDragObjects");
+  actualNotesToDrag = getNext(actualNotesToDrag, 0, 2);
 }
 
 void resetNoteToDragLocation(Note note) {

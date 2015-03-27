@@ -5,8 +5,8 @@ boolean showAlsoHiddenNotes = true;
 
 float zoom = 0.8;
 
-color bgColor = color(255, 255, 200);
-color noteColor = color(255, 0, 0);
+color bgColor = color(200, 255, 255);
+color noteColor = color(0, 0, 0);
 color viivastoColor = color(0, 0, 0);
 color textColor = color(0, 0, 0);
 
@@ -21,6 +21,7 @@ int numberOfMajors = 7;
 int numberOfNotes = 10;
 Note[][] notes = new Note[numberOfMajors][numberOfNotes];
 Note[] notesToDrag = new Note[100];
+Note[][] notesToDragTemp = new Note[3][100];
 
 NoteType[] noteTypes;
 

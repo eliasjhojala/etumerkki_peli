@@ -3,6 +3,7 @@ void setup() {
   { //Set window size to display size (full screen)
     programSize = new PVector(displayWidth, displayHeight);
     size(getX(programSize), getY(programSize));
+    frame.setResizable(true);
   } //End of setting window site to display size (full screen)
   storageLocation = new PVector(width-500, height-100); //Location for notes to drag "storage"
   
