@@ -4,7 +4,7 @@ Etumerkkipeli on Processing-kielellä tehty sovellus, joka opettaa käyttäjäll
 
 ## Lataukset
 
-- Linuxille: [Etumerkkipeli Linux.tar.bz2](https://github.com/nomelif/etumerkki_peli/blob/master/Etumerkki%20GNU%20Linux.tar.bz2)
+- Linuxille: [Etumerkkipeli Linux.tar.bz2](https://github.com/nomelif/etumerkki_peli/blob/master/Etumerkki%20GNU%20Linux.tar.bz2?raw=true)
 - Windowsille: [etumerkki_peli-master.zip](https://github.com/nomelif/etumerkki_peli/archive/master.zip)
 
 Huomautus Windows-käyttäjille: Ajettava ohjelma on alikansiossa application.windows32 32-bittisille koneille ja application.windows64 64-bittisilel koneille.
