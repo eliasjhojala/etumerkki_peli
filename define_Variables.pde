@@ -1,7 +1,7 @@
 
 
 //Define all the variables
-boolean showAlsoHiddenNotes = true;
+boolean showAlsoHiddenNotes = false;
 
 float zoom = 0.8;
 
